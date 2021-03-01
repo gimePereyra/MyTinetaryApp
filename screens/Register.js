@@ -26,7 +26,6 @@ const Register = (props) => {
         setErrores([])
 
         const respuesta = await props.newUser(usuario)
-        console.log(respuesta)
         if(respuesta && !respuesta.success){
             setErrores(respuesta.errores.details)
         }else{
@@ -37,11 +36,17 @@ const Register = (props) => {
     return (
         <View style={styles.header}>
             <ScrollView>
-                <TextInput placeholder='Email' onChangeText={(value) => leerInput("email", value)}></TextInput>
-                <TextInput placeholder='Password' name="password" onChangeText={(value) => leerInput("password", value)}></TextInput>
-                <TouchableOpacity  onPress={validarUsuario}>
-                    <Text>Register</Text>
-                </TouchableOpacity>
+                
+                <View style={styles.contenedorInput}>
+                    <Text style={styles.textTitle}>Register</Text>
+                    <TextInput style={styles.input}  placeholder="First name" onChangeText={(value) => leerInput("name", value)}></TextInput>
+                    <TextInput style={styles.input}  placeholder="Last name" onChangeText={(value) => leerInput("lastNameUser", value)}></TextInput>
+                    <TextInput style={styles.input}  placeholder='Email' onChangeText={(value) => leerInput("email", value)}></TextInput>
+                    <TextInput style={styles.input}  placeholder='Password' name="password" onChangeText={(value) => leerInput("password", value)}></TextInput>
+                    <TouchableOpacity  onPress={validarUsuario} style={styles.button}>
+                        <Text style={styles.texto}>Register</Text>
+                    </TouchableOpacity>
+                </View>
             </ScrollView>
         </View>
     );
@@ -50,10 +55,16 @@ const Register = (props) => {
     const styles = StyleSheet.create({
         header: {
             flex: 1,
+            justifyContent:'center',
+            alignItems:'center'
         },
-        containerCard:{
-            flex:1,
-            flexDirection:'column',
+        contenedorInput: {
+            flex: 1,
+            alignItems: "center",
+            justifyContent:'center',
+            margin: 10,
+            width: 350,
+            height: 480,
         },
         cardCity:{
             backgroundColor:'tomato',
@@ -66,17 +77,30 @@ const Register = (props) => {
             alignItems:'center',
             marginBottom:'5%'
         },
-        nameCity:{
-            padding:'2%',
-            fontSize:20,
-            color:'white',
-            textAlign:'center',
-            backgroundColor:'black',
-            width:'200%',
+        input: {
+            borderWidth: 1,
+            backgroundColor: "white",
+            padding: 10,
+            borderRadius: 18,
+            margin: 10,
+            width: "100%",
+            textAlign: "center"
+        },
+        button: {
+            backgroundColor: "blue",
+            width: "45%",
+            borderWidth: 1,
+            borderRadius: 20,
+            justifyContent: "center",
+            padding:'5%'
+        },
+    texto: {
+        fontSize: 20,
+        color: "white",
+        textAlign: "center",
     },
-    itinerary: {
-        color:'black',
-        fontSize:20
+    textTitle:{
+        fontSize:40,
     }
     });
 

@@ -1,8 +1,12 @@
+import { Entypo } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
 import { useEffect } from 'react';
 import { StyleSheet, Text, View,Image, ImageBackground, TouchableOpacity, RefreshControl} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { FontAwesome,MaterialIcons } from '@expo/vector-icons';
 
 const Itinerary = (props) => {
     console.log(props)
@@ -18,23 +22,39 @@ const Itinerary = (props) => {
         .then(data => setItineraries(data.respuesta))
     }, [])
 
-    console.log(itineraries)
-
     const refresh = () =>{}
 
     return (
-        <View style={styles.header}>
+        <View>
             <ScrollView  refreshControl={
                 <RefreshControl onRefresh={refresh}/>
             }>
                 <ImageBackground style={styles.ImagenCity}  source={{uri:imgCity}}>
                     <Text style={styles.nameCity}>{nameCity}</Text>
                 </ImageBackground>
-                {itineraries.length === 0 ? <Text>No hay itinerarios aun para esta ciudad</Text>
+                {itineraries.length === 0 ?
+                <ImageBackground  style={styles.ImagenCity} source={require('../assets/avionn.png')}>
+                    <Text style={styles.text} >We are sorry ...</Text>
+                    <Text style={styles.text} >There are no itineraries yet for this city.</Text>
+                </ImageBackground>
                 : itineraries.map(itinerary => {
                     return(
-                    <View>
-                            <Text style={styles.itinerary}>{itinerary.title}</Text>
+                    <View style={styles.contenedorItin}>
+                        <View style={styles.contenedorUser}>
+                            <ImageBackground imageStyle={{ borderRadius: 60 }} style={styles.imgItin} source={{ uri: itinerary.photoUser }} resizeMode="cover">
+                            </ImageBackground>
+                            <Text style={styles.textoInfo}>{itinerary.nameUser}</Text>
+                        </View>
+
+                        <View style={styles.contenedortexto}>
+                            <Text style={styles.titleItin} >{itinerary.title}</Text>
+                            <View style={styles.contenedorInfo}>
+                                <MaterialIcons name="sentiment-very-satisfied" size={24} color="white" /> <Text style={styles.textoInfo}>{itinerary.like}</Text>
+                                <FontAwesome name="money" size={24} color="white"/><Text style={styles.textoInfo}>{itinerary.price}</Text>
+                                <MaterialIcons name="timer" size={24} color="white" /> <Text style={styles.textoInfo}>{itinerary.duration}</Text>
+                            </View>
+                            {itinerary.hashtags.map(hash => <Text style={styles.textoInfo}>{hash.hashtag}</Text>)}
+                        </View>
                     </View>
                     )
                 })}
@@ -44,18 +64,6 @@ const Itinerary = (props) => {
     }
 
     const styles = StyleSheet.create({
-        header: {
-            flex: 1,
-        },
-        containerCard:{
-            flex:1,
-            flexDirection:'column',
-        },
-        cardCity:{
-            backgroundColor:'tomato',
-            width:'100%',
-            height:'100%',
-        },
         ImagenCity:{
             padding:'20%',
             justifyContent:'center',
@@ -70,9 +78,75 @@ const Itinerary = (props) => {
             backgroundColor:'black',
             width:'200%',
     },
-    itinerary: {
+    text: {
+        fontSize:20,
+        backgroundColor:'white',
         color:'black',
-        fontSize:20
+        width:'100%',
+        padding:'10%',
+        textAlign:'center'
+    },
+    imgCity: {
+        width: 400,
+        height: 350,
+        justifyContent: "center",
+        margin:10,
+    },
+    textoCity: {
+        backgroundColor: "rgba(0,0,0,0.56)",
+        fontSize: 20,
+        color: "white",
+        textAlign: "center",
+    },
+    contenedorItin: {
+        width: "95%",
+        height: 200,
+        backgroundColor: "black",
+        flexDirection: 'row',
+        margin: 5,
+        borderWidth: 1,
+        borderColor: "grey",
+        borderRadius: 20,
+        alignItems: "center",
+        justifyContent:"center"
+
+    },
+    contenedorUser: {
+        alignItems: "center",
+        marginTop:15,
+        marginEnd:'20%'
+    },
+    imgItin: {
+        width: 80,
+        height: 80,
+    },
+    contenedortexto: {
+        width: 200,
+        padding: 5,
+        alignItems: "center",
+    },
+    titleItin: {
+        fontSize: 18,
+        color: "white",
+        textAlign: "center",
+        margin: 5,
+        backgroundColor: "rgba(153, 50, 204,0.56)",
+        width: "200%",
+        borderWidth: 1,
+        borderColor: "grey",
+        },
+    contenedorInfo: {
+        margin: 15,
+        flexDirection: "row",
+        justifyContent: 'space-around',
+    },
+    textoInfo: {
+        fontSize: 15,
+        color: "white",
+        textAlign: "center",
+        margin: 5,
+        alignSelf:"center",
+        margin:"5%"
     }
     });
 
