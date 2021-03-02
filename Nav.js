@@ -13,47 +13,33 @@ import {NavigationContainer} from '@react-navigation/native'
 import {createStackNavigator} from "@react-navigation/stack"
 import { StyleSheet} from 'react-native';
 import { useEffect } from 'react';
-import { Button, Text, View } from 'react-native';
+import { Button, Text, View,TouchableOpacity} from 'react-native';
 
 
 const Stack = createStackNavigator()
 // guardo en const Stack, función que posibilita navegar en stacks de screens
 
-export const Nav = ({ loggedUser }) => {
+export const Nav = (props) => {
 
-  if (loggedUser) {
-    var routes =
-      <Stack.Navigator screenOptions={{
-        headerStyle: {
-          backgroundColor: "rgba(153, 50, 204,0.56)",
-        },
-        headerRight: () => (<Text style={styles.textHeader} >Bienvenido, {loggedUser && loggedUser.userName}!</Text>)
-      }}>
+  const desloguear = () => {
+    <NavigationContainer>
+      <Stack.Navigator>
         <Stack.Screen name="Inicio" component={Initiation} options={{ title: "Welcome to Home" }} />
-        <Stack.Screen name="Register" component={Register} options={{ title: "You are in Sign Up" }} />
-        <Stack.Screen name="SignIn" component={SignIn} options={{ title: "You are in Sign In" }} />
-        <Stack.Screen name="Cities" component={Home} options={{ title: "Tour the cities" }} />
-        <Stack.Screen name="Itinerary" component={Itinerary} options={{ title: "Enjoy Itineray" }} />
       </Stack.Navigator>
-  } else {
-    var routes =
-      <Stack.Navigator screenOptions={{
-        headerStyle: {
-          backgroundColor: "rgba(153, 50, 204,0.56)",
-        },
-      }}>
-        <Stack.Screen name="Inicio" component={Initiation} options={{ title: "Welcome to Home" }} />
-        <Stack.Screen name="Register" component={Register} options={{ title: "You are in Sign Up" }} />
-        <Stack.Screen name="SignIn" component={SignIn} options={{ title: "You are in Sign In" }} />
-        <Stack.Screen name="Cities" component={Home} options={{ title: "Tour the cities" }} />
-      </Stack.Navigator>
+    </NavigationContainer>
 
   }
 
   return (
     <>
       <NavigationContainer>
-        {routes}
+        <Stack.Navigator>
+          <Stack.Screen name="Inicio" component={Initiation} options={{ title: "Welcome to Home" }} />
+          <Stack.Screen name="Register" component={Register} options={{ title: "You are in Sign Up" }} />
+          <Stack.Screen name="SignIn" component={SignIn} options={{ title: "You are in Sign In" }} />
+          <Stack.Screen name="Cities" component={Home} options={{ title: "Tour the cities"}} />
+          <Stack.Screen name="Itinerary" component={Itinerary} options={{ title: "Enjoy Itineray" }} />
+        </Stack.Navigator>
       </NavigationContainer>
     </>
   );
@@ -77,8 +63,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight:"bold",
     textAlign: 'center',
-
-  }
+  },
 });
 const mapStateToProps = state => {
   return {

@@ -14,11 +14,9 @@ const Initiation= ( props) => {
                 </View>
                 <View >
                     <TouchableOpacity style={styles.button}>
-                        <Text style={styles.textButton} onPress={()=>props.navigation.navigate('Cities')}>Discover »</Text>
                         <Text style={styles.textButton} onPress={()=>props.navigation.navigate('Register')}>Register »</Text>
                         <Text style={styles.textButton} onPress={()=>props.navigation.navigate('SignIn')}>SignIn »</Text>
                     </TouchableOpacity>
-                    
                 </View>
             </ImageBackground>
         </View>

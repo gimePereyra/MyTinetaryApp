@@ -19,7 +19,7 @@ const Register = (props) => {
 
     const validarUsuario = async e => {// funcion cuando le hace click a validar
         e.preventDefault()//prevenir que recargue la pagina
-        if(usuario.name === "" || usuario.lastNameUser === "" || usuario.email === "" || usuario.country === "" || usuario.picUser === "" || usuario.password === ""){
+        if(usuario.name === "" || usuario.lastNameUser === "" || usuario.email === "" || usuario.password === ""){
             alert ('falta de llenar campos')
             return true
         }
@@ -30,14 +30,16 @@ const Register = (props) => {
             setErrores(respuesta.errores.details)
         }else{
             alert ('usuario guardado con exito')
+            props.navigation.navigate('Cities')
         }
     }
 
     return (
         <View style={styles.header}>
+            <ImageBackground style={styles.image} source={require('../assets/luna.jpg')}>
             <ScrollView>
-                
                 <View style={styles.contenedorInput}>
+                <View style={styles.Input}>
                     <Text style={styles.textTitle}>Register</Text>
                     <TextInput style={styles.input}  placeholder="First name" onChangeText={(value) => leerInput("name", value)}></TextInput>
                     <TextInput style={styles.input}  placeholder="Last name" onChangeText={(value) => leerInput("lastNameUser", value)}></TextInput>
@@ -47,7 +49,9 @@ const Register = (props) => {
                         <Text style={styles.texto}>Register</Text>
                     </TouchableOpacity>
                 </View>
-            </ScrollView>
+                </View>
+                </ScrollView>
+            </ImageBackground>
         </View>
     );
     }
@@ -55,16 +59,31 @@ const Register = (props) => {
     const styles = StyleSheet.create({
         header: {
             flex: 1,
+            width: "100%",
             justifyContent:'center',
-            alignItems:'center'
+            alignItems:'center',
+        },
+        image: {
+            flex: 1,
+            resizeMode: "cover",
+            justifyContent: "center",
+            width:'100%'
         },
         contenedorInput: {
-            flex: 1,
-            alignItems: "center",
+            flex:1,
             justifyContent:'center',
-            margin: 10,
-            width: 350,
-            height: 480,
+            width: "80%",
+            height: "100%",
+            padding:'5%',
+            borderRadius:50,
+            margin:40,
+            marginTop:55
+        },
+        Input: {
+            alignItems: "center",
+            width: "100%",
+            height: "100%",
+            marginBottom:25
         },
         cardCity:{
             backgroundColor:'tomato',
@@ -88,7 +107,7 @@ const Register = (props) => {
         },
         button: {
             backgroundColor: "blue",
-            width: "45%",
+            width: "60%",
             borderWidth: 1,
             borderRadius: 20,
             justifyContent: "center",
@@ -100,7 +119,9 @@ const Register = (props) => {
         textAlign: "center",
     },
     textTitle:{
-        fontSize:40,
+        fontSize:30,
+        color:'white',
+        marginTop:25
     }
     });
 

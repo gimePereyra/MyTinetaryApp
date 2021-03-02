@@ -1,7 +1,7 @@
 import authActions from '../redux/actions/authActions'
 import { connect } from 'react-redux'
 import React, {useState} from 'react';
-import { StyleSheet, Text, View , TouchableOpacity,Alert} from 'react-native';
+import { StyleSheet, Text, View , TouchableOpacity,Alert, ImageBackground} from 'react-native';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
 
 const SignIn = (props) => {
@@ -28,22 +28,27 @@ const SignIn = (props) => {
         if(respuesta && !respuesta.success){
             setErrores([respuesta.errores])
         }else{
-            Alert.alert("Bienvenido!")
-            props.navigation.navigate("Cities")
+            alert ('Gracias por iniciar sesion')
+            props.navigation.navigate('Cities')
         }
     }
 
     return (
         <View style={styles.header}>
+            <ImageBackground style={styles.image} source={require('../assets/luna.jpg')}>
             <ScrollView>
-                <View style={styles.contenedorLogin}>
-                    <TextInput style={styles.input}  placeholder='Email' onChangeText={(value) => leerInput("email", value)}></TextInput>
-                    <TextInput style={styles.input}  placeholder='Password' name="password" onChangeText={(value) => leerInput("password", value)}></TextInput>
-                    <TouchableOpacity  onPress={validarUsuario} style={styles.button}>
-                        <Text style={styles.texto}>iniciar sesion</Text>
-                    </TouchableOpacity>
+                <View style={styles.contenedorInput}>
+                    <View style={styles.Input}>
+                    <Text style={styles.textTitle}>SignIn</Text>
+                        <TextInput style={styles.input}  placeholder='Email' onChangeText={(value) => leerInput("email", value)}></TextInput>
+                        <TextInput style={styles.input}  placeholder='Password' name="password" onChangeText={(value) => leerInput("password", value)}></TextInput>
+                        <TouchableOpacity  onPress={validarUsuario} style={styles.button}>
+                            <Text style={styles.texto}>SignIn</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </ScrollView>
+            </ImageBackground>
         </View>
     );
     }
@@ -51,16 +56,32 @@ const SignIn = (props) => {
     const styles = StyleSheet.create({
         header: {
             flex: 1,
+            width: "100%",
             justifyContent:'center',
-            alignItems:'center'
+            alignItems:'center',
         },
-        contenedorLogin: {
+        image: {
             flex: 1,
-            alignItems: "center",
+            resizeMode: "cover",
             justifyContent: "center",
-            margin: 10,
-            width: 350,
-            height: 350,
+            width:'100%'
+        },
+        contenedorInput: {
+            flex:1,
+            justifyContent:'center',
+            width: "80%",
+            height: "100%",
+            padding:'5%',
+            borderColor:"white",
+            borderRadius:50,
+            margin:40,
+            marginTop:100
+        },
+        Input: {
+            alignItems: "center",
+            width: "100%",
+            height: "100%",
+            marginBottom:25
         },
         cardCity:{
             backgroundColor:'tomato',
@@ -84,7 +105,7 @@ const SignIn = (props) => {
         },
         button: {
             backgroundColor: "blue",
-            width: "45%",
+            width: "60%",
             borderWidth: 1,
             borderRadius: 20,
             justifyContent: "center",
@@ -96,7 +117,9 @@ const SignIn = (props) => {
         textAlign: "center",
     },
     textTitle:{
-        fontSize:40,
+        fontSize:30,
+        color:'white',
+        marginTop:25
     }
     });
 
@@ -112,3 +135,4 @@ const SignIn = (props) => {
     
 
     export default connect(mapStateToProps,mapDispatchToProps) (SignIn)
+

@@ -1,7 +1,5 @@
-import { Entypo } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
-import { StatusBar } from 'expo-status-bar';
+import { Foundation } from '@expo/vector-icons';
 import React, {useState} from 'react';
 import { useEffect } from 'react';
 import { StyleSheet, Text, View,Image, ImageBackground, TouchableOpacity, RefreshControl} from 'react-native';
@@ -21,6 +19,8 @@ const Itinerary = (props) => {
         .then(respuesta => respuesta.json())
         .then(data => setItineraries(data.respuesta))
     }, [])
+
+    console.log(itineraries)
 
     const refresh = () =>{}
 
@@ -47,17 +47,24 @@ const Itinerary = (props) => {
                         </View>
 
                         <View style={styles.contenedortexto}>
-                            <Text style={styles.titleItin} >{itinerary.title}</Text>
+                            <Text style={styles.titleItin}> {itinerary.title} </Text>
                             <View style={styles.contenedorInfo}>
-                                <MaterialIcons name="sentiment-very-satisfied" size={24} color="white" /> <Text style={styles.textoInfo}>{itinerary.like}</Text>
-                                <FontAwesome name="money" size={24} color="white"/><Text style={styles.textoInfo}>{itinerary.price}</Text>
-                                <MaterialIcons name="timer" size={24} color="white" /> <Text style={styles.textoInfo}>{itinerary.duration}</Text>
+                                <View style={styles.contenedorIco}>
+                                    <View style={styles.icon}><AntDesign name="like1" size={24} color="black"><Text style={styles.textoInfo} >{itinerary.like}</Text></AntDesign></View>
+                                    <View style={styles.icon}><FontAwesome name="money" size={24} color="black"><Text style={styles.textoInfo}>{itinerary.price}</Text></FontAwesome></View>
+                                    <View style={styles.icon}><Foundation name="clock" size={24} color="black"><Text style={styles.textoInfo}>{itinerary.duration}</Text></Foundation></View>
+                                </View>
                             </View>
                             {itinerary.hashtags.map(hash => <Text style={styles.textoInfo}>{hash.hashtag}</Text>)}
                         </View>
                     </View>
                     )
                 })}
+                <View >
+                    <TouchableOpacity style={styles.button}>
+                        <Text style={styles.textButton} onPress={()=>props.navigation.navigate('Inicio')}>logOut »</Text>
+                    </TouchableOpacity>
+                </View>
             </ScrollView>
         </View>
     );
@@ -100,12 +107,11 @@ const Itinerary = (props) => {
     },
     contenedorItin: {
         width: "95%",
-        height: 200,
-        backgroundColor: "black",
+        height: 230,
         flexDirection: 'row',
         margin: 5,
         borderWidth: 1,
-        borderColor: "grey",
+        borderColor: "rgb(255, 145, 0)",
         borderRadius: 20,
         alignItems: "center",
         justifyContent:"center"
@@ -114,7 +120,8 @@ const Itinerary = (props) => {
     contenedorUser: {
         alignItems: "center",
         marginTop:15,
-        marginEnd:'20%'
+        marginEnd:'10%',
+        marginLeft:'10%'
     },
     imgItin: {
         width: 80,
@@ -124,14 +131,14 @@ const Itinerary = (props) => {
         width: 200,
         padding: 5,
         alignItems: "center",
+        marginEnd:'5%'
     },
     titleItin: {
         fontSize: 18,
         color: "white",
         textAlign: "center",
-        margin: 5,
         backgroundColor: "rgba(153, 50, 204,0.56)",
-        width: "200%",
+        width: "100%",
         borderWidth: 1,
         borderColor: "grey",
         },
@@ -140,13 +147,39 @@ const Itinerary = (props) => {
         flexDirection: "row",
         justifyContent: 'space-around',
     },
+    contenedorIco : {
+        width: "100%",
+        flexDirection: 'row',
+        margin: 2,
+        alignItems: "center",
+        justifyContent:"center"
+    },
     textoInfo: {
         fontSize: 15,
-        color: "white",
+        color: "black",
         textAlign: "center",
         margin: 5,
         alignSelf:"center",
         margin:"5%"
+    },
+    icon :{
+        width:'50%',
+    },
+    button :{
+        marginBottom:'60%',
+        marginTop:'10%',
+        alignItems:'center',
+        justifyContent:'center',
+    },
+    textButton:{
+        fontSize:20,
+        color:'white',
+        backgroundColor:'blue',
+        width:'60%',
+        padding:'2%',
+        textAlign:'center',
+        borderRadius:25,
+        marginBottom:'5%',
     }
     });
 
