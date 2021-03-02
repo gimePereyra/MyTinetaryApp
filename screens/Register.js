@@ -29,7 +29,7 @@ const Register = (props) => {
         if(respuesta && !respuesta.success){
             setErrores(respuesta.errores.details)
         }else{
-            alert ('usuario guardado con exito')
+            alert ('User saved successfully')
             props.navigation.navigate('Cities')
         }
     }

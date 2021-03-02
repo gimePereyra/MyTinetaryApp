@@ -28,7 +28,7 @@ const SignIn = (props) => {
         if(respuesta && !respuesta.success){
             setErrores([respuesta.errores])
         }else{
-            alert ('Gracias por iniciar sesion')
+            alert ('Welcome!')
             props.navigation.navigate('Cities')
         }
     }
